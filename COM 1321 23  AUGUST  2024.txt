@@ -13,18 +13,18 @@ public class TicTacToe {
     static char currentPlayer = 'X';
 
     public static void main(String[] args) {
-        Scanner unarine = new Scanner(System.in);
+        Scanner shudu = new Scanner(System.in);
         boolean gameEnd = false;
 
         while (!gameEnd) {
             displayBoard();
-            int move = getMove(unarine);
+            int move = getMove(shudu);
             makeMove(move);
             gameEnd = checkWin() || checkDraw();
             currentPlayer = switchPlayer(currentPlayer);
         }
 
-        unarine.close();
+        shudu.close();
     }
 
     private static void displayBoard() {
