@@ -1,0 +1,84 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package tic.tac.toe;
+import java.util.Scanner;
+/**
+ *
+ * @author shudu
+ */
+public class TicTacToe {
+    static char[] board = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+    static char currentPlayer = 'X';
+
+    public static void main(String[] args) {
+        Scanner unarine = new Scanner(System.in);
+        boolean gameEnd = false;
+
+        while (!gameEnd) {
+            displayBoard();
+            int move = getMove(unarine);
+            makeMove(move);
+            gameEnd = checkWin() || checkDraw();
+            currentPlayer = switchPlayer(currentPlayer);
+        }
+
+        unarine.close();
+    }
+
+    private static void displayBoard() {
+        System.out.println(board[0] + "|" + board[1] + "|" + board[2]);
+        System.out.println("-+-+-");
+        System.out.println(board[3] + "|" + board[4] + "|" + board[5]);
+        System.out.println("-+-+-");
+        System.out.println(board[6] + "|" + board[7] + "|" + board[8]);
+    }
+
+    private static int getMove(Scanner scanner) {
+        System.out.print("Enter your move (1-9): ");
+        int move = scanner.nextInt();
+        while (move < 1 || move > 9 || board[move - 1] != ' ') {
+            System.out.println("Invalid move. Please try again.");
+            move = scanner.nextInt();
+        }
+        return move - 1;
+    }
+
+    private static void makeMove(int move) {
+        board[move] = currentPlayer;
+    }
+
+    private static boolean checkWin() {
+        // Check rows, columns, and diagonals for a win
+        for (int i = 0; i < 3; i++) {
+            if (board[i] == board[i + 3] && board[i + 3] == board[i + 6] && board[i] != ' ') {
+                return true;
+            }
+            if (board[3 * i] == board[3 * i + 1] && board[3 * i + 1] == board[3 * i + 2] && board[3 * i] != ' ') {
+                return true;
+            }
+        }
+        if (board[0] == board[4] && board[4] == board[8] && board[0] != ' ') {
+            return true;
+        }
+        if (board[2] == board[4] && board[4] == board[6] && board[2] != ' ') {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean checkDraw() {
+        for (char c : board) {
+            if (c == ' ') {
+                return false;
+            }
+        }
+        System.out.println("It's a draw!");
+        return true;
+    }
+
+    private static char switchPlayer(char currentPlayer) {
+        return currentPlayer == 'X' ? 'O' : 'X';
+    }
+}
